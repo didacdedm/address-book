@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      searchText:'Buscar',
+      searchText:'',
     };
   }
 
@@ -28,7 +28,7 @@ class App extends Component {
           <div className="col-md-6">Nuevo Contacto</div>
         </div>
       </div> 
-      <div><Footer copyrigth="2017 Diego Del Salto"/></div>
+      <div><Footer copyrigth="&copy; 2017 Diego Del Salto"/></div>
       </div>
     );
   }
