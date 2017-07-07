@@ -1,19 +1,30 @@
 import React, { Component } from 'react';
+
+import axios from 'axios'
+
 import Header from './components/Header.js'
 import Footer from './components/Footer.js'
 import SearchBox from './components/SearchBox.js'
 import ContactForm from './components/ContactForm.js'
+import ContactList from './components/ContactList.js'
+
+const API_URL='https://address-book-api-kfpkaqtghu.now.sh';
 
 class App extends Component {
   
   constructor(props){
     super(props);
     this.state = {
+      contacts: [],
       searchText:'',
       nameText:'',
       lastnameText:'',
       phoneText:'',
     };
+  }
+
+  componentDidMount(){
+    this.getContacts();
   }
 
   handleSearchTextChange=(event)=>{
@@ -40,6 +51,44 @@ class App extends Component {
     })
   }
 
+  getContacts=()=>{
+    axios({
+      method: 'GET',
+      url: API_URL + '/api/contacts',
+      headers:{
+        'Api-Key':'1720074127'
+      },
+    }).then((response) => {
+        console.log(response);
+        this.setState({ contacts: response.data.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  saveContact = (contact) => {
+    axios({
+      method: 'POST',
+      url: API_URL + '/api/contacts',
+      headers: {
+        'Api-Key': '1716031595',
+        'Content-Type': 'application/json',
+      },
+      data: {
+        firstName: contact.firstName,
+        lastName: contact.lastName,
+        phone: contact.phone,
+      },
+    }).then((response) => {
+      console.log(response);
+      this.getContacts();
+    })
+    .catch((error) => {
+      console.log(error, error.response);
+    })
+  }
+
   render() {
     return (
       
@@ -52,15 +101,19 @@ class App extends Component {
               onChange={this.handleSearchTextChange}
                                          
             />
+            <ContactList 
+              contacts={this.state.contacts}  
+            />
           </div>
-          <div className="col-md-6">Nuevo Contacto</div>
-          <div className="col-md-12"><ContactForm
+          <div className="col-md-6 text-center">Nuevo Contacto</div>
+          <div className="col-md-6"><ContactForm
                                         valueName={this.state.nameText}
                                         valueLastname={this.state.lastnameText}
                                         valuePhone={this.state.phoneText}
                                         onNameChange={this.handleNameTextChange}
                                         onLastnameChange={this.handleLastnameTextChange}
                                         onPhoneChange={this.handlePhoneTextChange}/></div>
+                                        saveContact={this.saveContact}
         </div>
       </div> 
       <div><Footer copyrigth="&copy; 2017 Diego Del Salto"/></div>
