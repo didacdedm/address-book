@@ -4,19 +4,24 @@ const ContactForm = (props) => (
     
     
     <form className="center">
+        <div>
         <p><label>Nombre: </label>
-        <input type="text"  value={props.valueName} onChange={props.onNameChange}/></p>
+        <input type="text"  value={props.firstName} onChange={props.handleFirstNameChange}/></p>
         <p><label>Apellido: </label>
-        <input type="text" value={props.valueLastname} onChange={props.onLastnameChange}/></p>
+        <input type="text" value={props.Lastname} onChange={props.handleLastNameChange}/></p>
         <p><label>Telefono: </label>
-        <input type="text" value={props.valuePhone} onChange={props.onPhoneChange}/></p>
-        <div className="text-center">
-            <button className="btn btn-primary" onClick={()=>props.saveContact({
-                    firstName:props.valueName,
-                    lastName:props.valueLastname,
-                    phone:props.valuePhone
-                })}>Guardar</button>
-          </div>
+        <input type="text" value={props.phone} onChange={props.handlePhoneChange}/></p>
+        <div>
+            <button className="btn btn-primary" onClick={() => props.saveContact({
+                firstName: props.firstName,
+                lastName: props.lastName,
+                phone: props.phone
+                })}
+                >
+                Guardar
+                </button>
+        </div>
+    </div>
     </form>
 );
 
