@@ -51,12 +51,12 @@ class App extends Component {
     })
   }
 
-  getContacts=()=>{
+  getContacts = () => {
     axios({
       method: 'GET',
       url: API_URL + '/api/contacts',
-      headers:{
-        'Api-Key':'1720074127'
+      headers: {
+        'Api-Key': '1720074127',
       },
     }).then((response) => {
         console.log(response);
@@ -72,7 +72,7 @@ class App extends Component {
       method: 'POST',
       url: API_URL + '/api/contacts',
       headers: {
-        'Api-Key': '1716031595',
+        'Api-Key': '1720074127',
         'Content-Type': 'application/json',
       },
       data: {
@@ -82,7 +82,7 @@ class App extends Component {
       },
     }).then((response) => {
       console.log(response);
-      this.getContacts();
+      this._getContacts();
     })
     .catch((error) => {
       console.log(error, error.response);
@@ -90,6 +90,15 @@ class App extends Component {
   }
 
   render() {
+    const contacts = this.state.contacts.filter(contact => {
+      if (contact.firstName.indexOf(this.state.searchText) > -1) {
+        return true;
+      }
+      if (contact.lastName.indexOf(this.state.searchText) > -1) {
+        return true;
+      }
+      return false;
+    });
     return (
       
       <div className="text-center"><Header title="Address Book"/> 
@@ -101,9 +110,8 @@ class App extends Component {
               onChange={this.handleSearchTextChange}
                                          
             />
-            <ContactList 
-              contacts={this.state.contacts}  
-            />
+            <br />
+              <ContactList contacts={contacts} />
           </div>
           <div className="col-md-6 text-center">Nuevo Contacto</div>
           <div className="col-md-6"><ContactForm

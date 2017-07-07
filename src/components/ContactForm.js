@@ -1,6 +1,8 @@
 import React from 'react';
 
 const ContactForm = (props) => (
+    
+    
     <form className="center">
         <p><label>Nombre: </label>
         <input type="text"  value={props.valueName} onChange={props.onNameChange}/></p>
